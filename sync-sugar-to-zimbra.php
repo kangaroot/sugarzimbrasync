@@ -203,7 +203,7 @@ try {
   		// clear out existing contacts
   		echo('=> Clear Zimbra:    /opt/zimbra/bin/zmprov sm '.$zimbra_account.' emptyFolder \'/'.$zimbra_folder.'\''."\n");
   		// add in the contacts harvested from sugar
-  		echo('=> Add Sugar Data:  /usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' --data-binary @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"'."\n");
+  		echo('=> Add Sugar Data:  /usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"'."\n");
   } else if ($DEBUG === false) {
         // progress indicator
         echo("=> Clearing Zimbra Data\n");
@@ -212,7 +212,7 @@ try {
   		// progress indicator
         echo("=> Adding parsed data from SugarCRM into Zimbra\n");
   		// add in the contacts harvested from sugar
-  		system('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' --data-binary @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"');
+  		system('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"');
   } //IF  		
 // progress indicator
 echo("=> Done!\n");
