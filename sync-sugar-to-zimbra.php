@@ -16,29 +16,8 @@ if(!defined('sugarEntry')) define('sugarEntry', true);
 
 ///////// INCLUDES ////////////////////////////////////////////////////////
 require_once('zimbra-nusoap.php');
+require_once('config.php');
 
-
-///////// CONFIG //////////////////////////////////////////////////////////
-// DEBUG MODE: does not modify anything, just prints out the commands it would run
-$DEBUG = true;
-
-// sugar server location, ell formed URL
-$sugarURL = "";
-// login user and pasword
-$sugarUser = "";
-$sugarPwd = "";
-
-// proxy details
-$proxyHost = "";
-$proxyPort = "";
-
-// zimbra details
-$zimbra_url="";
-$zimbra_account='';
-$zimbra_folder='';
-$zimbra_password='';
-$zimbra_username='';
-	
 ///////// BODY ////////////////////////////////////////////////////////////
 
 // progress indicator
