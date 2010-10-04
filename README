@@ -1,0 +1,24 @@
+== What does it do? ==
+
+Get all contacts from SugarCRM via its soap interface,
+empty a specific contacts folder of a Zimbra user, and re-fill it using
+the Zimbra REST interface.
+
+Urls, account, folder, etc are of course configurable.
+
+Includes a debug mode that doesn't really touch your Zimbra data, only says
+what it would do.
+
+
+== Dependencies ==
+* php commandline interpreter
+* curl
+* nusoap library shipped with sugar (included)
+* zmprov [*]
+
+[*] zmprov is part of zimbra, so you'll probably run this on the machine that runs zimbra.
+    the sugar machine can be different, as long as you have access to it's soap interface.
+
+== known issues ==
+* Memory usage is not optimal as it is. (we use the huge dataset at once).
+Play with php's memory_limit setting, we need about 400MB for 500 contacts.
