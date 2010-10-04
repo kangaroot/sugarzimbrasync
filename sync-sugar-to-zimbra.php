@@ -15,7 +15,7 @@
 if(!defined('sugarEntry')) define('sugarEntry', true);  
 
 ///////// INCLUDES ////////////////////////////////////////////////////////
-require_once('/var/www/SugarCE/include/nusoap/nusoap.php');
+require_once('zimbra-nusoap.php');
 
 
 ///////// CONFIG //////////////////////////////////////////////////////////
