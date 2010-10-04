@@ -20,6 +20,14 @@ require_once('config.php');
 
 ///////// BODY ////////////////////////////////////////////////////////////
 
+function die_error ($msg, $exit = 2) {
+	if(is_array($msg)) {
+		$msg = print_r($msg,true);
+	}
+	echo ("ERROR:\n$msg\n");
+	exit ($exit);
+}
+
 // progress indicator
 echo("=> Connecting to SugarCRM\n");
 
@@ -30,8 +38,7 @@ $soapClient = new nusoapclient($sugarURL.'/soap.php?wsdl', true, $proxyHost, $pr
 // error check borrowed from: https://www.sugarcrm.com/forums/showthread.php?p=88449
 $err = $soapClient->getError();
 if ($err) {
-	echo("err[");print_r($err);echo("]conn\n");
-	die();
+	die_error($err);
 }
 // do auth
 $auth_array = array(
@@ -47,8 +54,7 @@ echo("=> Logging in to SugarCRM\n");
 $login_results = $soapClient->call('login',$auth_array);
 $err = $soapClient->getError();
 if ($err) {
-	echo("err[");print_r($err);echo("]login\n");
-	die();
+	die_error($err);
 }
 
 $session =  $login_results['id'];
@@ -62,8 +68,7 @@ try {
   $result = $soapClient->call('get_entry_list',array('session'=>$session, 'module_name'=>'Contacts', 'query'=>'', 'order_by'=>'contacts.first_name asc', 'offset'=>0, 'select_fields'=>array(), 'max_results'=>100000));
 	$err = $soapClient->getError();
 	if ($err) {
-		echo("err[");print_r($err);echo("]get_entry_list\n");
-		die();
+		die_error($err);
 	}
   //$contacts = (array) $result->entry_list;
   $contacts = $result[entry_list];
@@ -216,8 +221,7 @@ try {
 		exec  ('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T /tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"', $output);
 		$output = implode ($output,"\n");
 		if (stripos($output,'error') !== false) {
-			echo "AN ERROR OCCURRED DURING TRANSMISSION:\n$output\n";
-			exit (2);
+			die_error($output);
 		}
 }//IF
 // progress indicator
@@ -225,8 +229,7 @@ echo("=> Done!\n");
 
 }
 catch (SoapFault $soapFault) {
-  echo("second connection");
-  var_dump($soapFault);
+  die_error("Second connection" . var_export ($soapFault, true));
 }
 
 function my_replace($data) {
