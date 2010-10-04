@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 // created by eleventeenth.com
