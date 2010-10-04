@@ -1,13 +1,13 @@
 #!/usr/bin/env php
 <?php
 
-// created by eleventeenth.com
-// created: Wed Nov 28 15:27:06 GMT 2007
-// written by using code from various places - refferenced where used. main code comes from
-// 		http://pastebin.ca/691313 downlaoded 26/7/2007
-// 		http://www.sugarcrm.com/forums/printthread.php?t=24807&page=2&pp=10
-// 		http://www.sugarcrm.com/wiki/index.php?title=SOAP_Intro_and_Practical_Examples
-
+// AUTHORS:
+// eleventeenth.com
+// Dieter Plaetinck, Kangaroot
+// Anonymous ( http://pastebin.ca/691313 )
+// http://www.sugarcrm.com/forums/printthread.php?t=24807&page=2&pp=10
+// http://www.sugarcrm.com/wiki/index.php?title=SOAP_Intro_and_Practical_Examples
+// https://www.sugarcrm.com/forums/showthread.php?p=88449
 
 ///////// GLOBALS /////////////////////////////////////////////////////////
 // this needs to be set for?? ref: http://www.sugarcrm.com/forums/showthread.php?t=27101
@@ -66,7 +66,6 @@ $auth_array = array(
 echo("=> Logging in to SugarCRM\n");
 
 $login_results = $soapClient->call('login',$auth_array);
-// error check borrowed from: https://www.sugarcrm.com/forums/showthread.php?p=88449
 $err = $soapClient->getError();
 if ($err) {
 	echo("err[");print_r($err);echo("]login\n");
@@ -82,7 +81,6 @@ try {
   echo("=> Pulling contacts from SugarCRM\n");
 
   $result = $soapClient->call('get_entry_list',array('session'=>$session, 'module_name'=>'Contacts', 'query'=>'', 'order_by'=>'contacts.first_name asc', 'offset'=>0, 'select_fields'=>array(), 'max_results'=>100000));
-  	// error check borrowed from: https://www.sugarcrm.com/forums/showthread.php?p=88449
 	$err = $soapClient->getError();
 	if ($err) {
 		echo("err[");print_r($err);echo("]get_entry_list\n");
