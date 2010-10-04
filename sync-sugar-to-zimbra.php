@@ -212,8 +212,14 @@ try {
   		// progress indicator
         echo("=> Adding parsed data from SugarCRM into Zimbra\n");
   		// add in the contacts harvested from sugar
-  		system('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"');
-  } //IF  		
+		// curl is pretty lame. it might exit(0) even though the server gave http 400, luckily we can parse the output
+		exec  ('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T /tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"', $output);
+		$output = implode ($output,"\n");
+		if (stripos($output,'error') !== false) {
+			echo "AN ERROR OCCURRED DURING TRANSMISSION:\n$output\n";
+			exit (2);
+		}
+}//IF
 // progress indicator
 echo("=> Done!\n");
 
