@@ -63,120 +63,138 @@ try {
 
   echo("=> Parsing SugarCRM data into CSV for Zimbra\n");
 
-  fwrite($fp, '"assistantPhone","birthday","callbackPhone","carPhone","company","companyPhone","description","department","dlist","email","email2","email3","fileAs","firstName","fullName","homeCity","homeCountry","homeFax","homePhone","homePhone2","homePostalCode","homeState","homeStreet","homeURL","initials","jobTitle","lastName","middleName","mobilePhone","namePrefix","nameSuffix","nickname","notes","office","otherCity","otherCountry","otherFax","otherPhone","otherPostalCode","otherState","otherStreet","otherURL","pager","workCity","workCountry","workFax","workPhone","workPhone2","workPostalCode","workState","workStreet","workURL","type"');
-  fwrite($fp, "\n");
+	$headers = array (
+		'assistantPhone',
+		'birthday',
+		'callbackPhone',
+		'carPhone',
+		'company',
+		'companyPhone',
+		'description',
+		'department',
+		'dlist',
+		'email',
+		'email2',
+		'email3',
+		'fileAs',
+		'firstName',
+		'fullName',
+		'homeCity',
+		'homeCountry',
+		'homeFax',
+		'homePhone',
+		'homePhone2',
+		'homePostalCode',
+		'homeState',
+		'homeStreet',
+		'homeURL',
+		'initials',
+		'jobTitle',
+		'lastName',
+		'middleName',
+		'mobilePhone',
+		'namePrefix',
+		'nameSuffix',
+		'nickname',
+		'notes',
+		'office',
+		'otherCity',
+		'otherCountry',
+		'otherFax',
+		'otherPhone',
+		'otherPostalCode',
+		'otherState',
+		'otherStreet',
+		'otherURL',
+		'pager',
+		'workCity',
+		'workCountry',
+		'workFax',
+		'workPhone',
+		'workPhone2',
+		'workPostalCode',
+		'workState',
+		'workStreet',
+		'workURL',
+		'type'
+	);
+	$fields = array (
+		'account_id',
+		'account_name',
+		'alt_address_city',
+		'alt_address_country',
+		'alt_address_postalcode',
+		'alt_address_state',
+		'alt_address_street',
+		'assigned_user_id',
+		'assigned_user_name',
+		'assistant',
+		'assistant_phone',
+		'birthdate',
+		'c_accept_status_fields',
+		'campaign_id',
+		'created_by',
+		'date_entered',
+		'date_modified',
+		'deleted',
+		'department',
+		'description',
+		'do_not_call',
+		'email_opt_out',
+		'email1',
+		'email2',
+		'first_name',
+		'id',
+		'invalid_email',
+		'last_name',
+		'lead_source',
+		'm_accept_status_fields',
+		'modified_user_id',
+		'opportunity_role_fields',
+		'phone_fax',
+		'phone_home',
+		'phone_mobile',
+		'phone_other',
+		'phone_work',
+		'portal_active',
+		'portal_app',
+		'portal_name',
+		'portal_password',
+		'primary_address_city',
+		'primary_address_country',
+		'primary_address_postalcode',
+		'primary_address_state',
+		'primary_address_street',
+		'report_to_name',
+		'reports_to_id',
+		'salutation',
+		'team_id',
+		'team_name',
+		'title');
+	$headerstring = '';
+	foreach ($headers as $header) {
+		if ($headerstring){
+			$headerstring .= ',';
+		}
+		$headerstring .= "\"$header\"";
+	}
+	fwrite($fp, "$headerstring\n");
 
   for ($c=0; $c<sizeOf($contacts); $c++) {
     $contact = $contacts[$c];
     $elements = $contact[name_value_list];
-
-    $account_id = '';
-    $account_name = '';
-    $alt_address_city = '';
-    $alt_address_country = '';
-    $alt_address_postalcode = '';
-    $alt_address_state = '';
-    $alt_address_street = '';
-    $assigned_user_id = '';
-    $assigned_user_name = '';
-    $assistant = '';
-    $assistant_phone = '';
-    $birthdate = '';
-    $c_accept_status_fields = '';
-    $campaign_id = '';
-    $created_by = '';
-    $date_entered = '';
-    $date_modified = '';
-    $deleted = '';
-    $department = '';
-    $description = '';
-    $do_not_call = '';
-    $email_opt_out = '';
-    $email1 = '';
-    $email2 = '';
-    $first_name = '';
-    $id = '';
-    $invalid_email = '';
-    $last_name = '';
-    $lead_source = '';
-    $m_accept_status_fields = '';
-    $modified_user_id = '';
-    $opportunity_role_fields = '';
-    $phone_fax = '';
-    $phone_home = '';
-    $phone_mobile = '';
-    $phone_other = '';
-    $phone_work = '';
-    $portal_active = '';
-    $portal_app = '';
-    $portal_name = '';
-    $portal_password = '';
-    $primary_address_city = '';
-    $primary_address_country = '';
-    $primary_address_postalcode = '';
-    $primary_address_state = '';
-    $primary_address_street = '';
-    $report_to_name = '';
-    $reports_to_id = '';
-    $salutation = '';
-    $team_id = '';
-    $team_name = '';
-    $title = '';
-
+	$data = array ();
+	foreach ($fields as $field) {
+		$data[$field] = '';
+	}
     for ($e=0; $e<sizeOf($elements); $e++) {
       $element = $elements[$e];
-      if($element[name] == 'account_id') { $account_id = my_replace($element[value]); }
-      if($element[name] == 'account_name') { $account_name = my_replace($element[value]); }
-      if($element[name] == 'alt_address_city') { $alt_address_city = my_replace($element[value]); }
-      if($element[name] == 'alt_address_country') { $alt_address_country = my_replace($element[value]); }
-      if($element[name] == 'alt_address_postalcode') { $alt_address_postalcode = my_replace($element[value]); }
-      if($element[name] == 'alt_address_state') { $alt_address_state = my_replace($element[value]); }
-      if($element[name] == 'alt_address_street') { $alt_address_street = my_replace($element[value]); }
-      if($element[name] == 'assigned_user_id') { $assigned_user_id = my_replace($element[value]); }
-      if($element[name] == 'assigned_user_name') { $assigned_user_name = my_replace($element[value]); }
-      if($element[name] == 'assistant') { $assistant = my_replace($element[value]); }
-      if($element[name] == 'assistant_phone') { $assistant_phone = my_replace($element[value]); }
-      if($element[name] == 'birthdate') { $birthdate = my_replace($element[value]); }
-      if($element[name] == 'c_accept_status_fields') { $c_accept_status_fields = my_replace($element[value]); }
-      if($element[name] == 'campaign_id') { $campaign_id = my_replace($element[value]); }
-      if($element[name] == 'created_by') { $created_by = my_replace($element[value]); }
-      if($element[name] == 'date_entered') { $date_entered = my_replace($element[value]); }
-      if($element[name] == 'date_modified') { $date_modified = my_replace($element[value]); }
-      if($element[name] == 'deleted') { $deleted = my_replace($element[value]); }
-      if($element[name] == 'department') { $department = my_replace($element[value]); }
-      if($element[name] == 'description') { $description = my_replace($element[value]); }
-      if($element[name] == 'do_not_call') { $do_not_call = my_replace($element[value]); }
-      if($element[name] == 'email_opt_out') { $email_opt_out = my_replace($element[value]); }
-      if($element[name] == 'email1') { $email1 = my_replace($element[value]); }
-      if($element[name] == 'email2') { $email2 = my_replace($element[value]); }
-      if($element[name] == 'first_name') { $first_name = my_replace($element[value]); }
-      if($element[name] == 'id') { $id = my_replace($element[value]); }
-      if($element[name] == 'invalid_email') { $invalid_email = my_replace($element[value]); }
-      if($element[name] == 'last_name') { $last_name = my_replace($element[value]); }
-      if($element[name] == 'lead_source') { $lead_source = my_replace($element[value]); }
-      if($element[name] == 'm_accept_status_fields') { $m_accept_status_fields = my_replace($element[value]); }
-      if($element[name] == 'modified_user_id') { $modified_user_id = my_replace($element[value]); }
-      if($element[name] == 'opportunity_role_fields') { $opportunity_role_fields = my_replace($element[value]); }
-      if($element[name] == 'phone_fax') { $phone_fax = my_replace($element[value]); }
-      if($element[name] == 'phone_home') { $phone_home = my_replace($element[value]); }
-      if($element[name] == 'phone_mobile') { $phone_mobile = my_replace($element[value]); }
-      if($element[name] == 'phone_other') { $phone_other = my_replace($element[value]); }
-      if($element[name] == 'phone_work') { $phone_work = my_replace($element[value]); }
-      if($element[name] == 'portal_active') { $portal_active = my_replace($element[value]); }
-      if($element[name] == 'portal_app') { $portal_app = my_replace($element[value]); }
-      if($element[name] == 'portal_name') { $portal_name = my_replace($element[value]); }
-      if($element[name] == 'portal_password') { $portal_password = my_replace($element[value]); }
-      if($element[name] == 'primary_address_city') { $primary_address_city = my_replace($element[value]); }
-      if($element[name] == 'primary_address_country') { $primary_address_country = my_replace($element[value]); }
-      if($element[name] == 'primary_address_postalcode') { $primary_address_postalcode = my_replace($element[value]); }
-      if($element[name] == 'primary_address_state') { $primary_address_state = my_replace($element[value]); }
-      if($element[name] == 'primary_address_street') { $primary_address_street = my_replace($element[value]); }
-      if($element[name] == 'report_to_name') { $report_to_name = my_replace($element[value]); }
-      if($element[name] == 'reports_to_id') { $reports_to_id = my_replace($element[value]); }
-      if($element[name] == 'salutation') { $salutation = my_replace($element[value]); }
-      if($element[name] == 'team_id') { $team_id = my_replace($element[value]); }
-      if($element[name] == 'team_name') { $team_name = my_replace($element[value]); }
-      if($element[name] == 'title') { $title = my_replace($element[value]); }
+	foreach ($fields as $field) {
+		if($element[name] == $field) {
+			$data[$field] = my_replace($element[value]);
+		}
+	}
+	extract ($data);
     }
     fwrite($fp, "\"$assistant_phone\",\"$birthdate\",\"\",\"\",\"$account_name\",\"$phone_work\",\"$description\",\"$department\",\"\",\"$email1\",\"$email2\",\"\",\"7\",\"$first_name\",\"$first_name $last_name\",\"\",\"\",\"\",\"$phone_home\",\"\",\"\",\"\",\"\",\"\",\"\",\"$title\",\"$last_name\",\"\",\"$phone_mobile\",\"$salutation\",\"\",\"\",\"$description\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"$primary_address_city\",\"$primary_address_country\",\"$phone_fax\",\"$phone_work\",\"$phone_other\",\"$primary_address_postalcode\",\"$primary_address_state\",\"$primary_address_street\",\"$sugarURL/index.php?action=DetailView&module=Contacts&record=$id\",\"\"");
     fwrite($fp, "\n");
