@@ -4,7 +4,7 @@ $DEBUG = true;
 
 // sugar server location, well formed URL
 $sugarURL = "";
-// login user and pasword
+// login user and password
 $sugarUser = "";
 $sugarPwd = "";
 
