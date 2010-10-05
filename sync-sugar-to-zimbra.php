@@ -14,12 +14,15 @@ if(!defined('sugarEntry')) define('sugarEntry', true);
 require_once('zimbra-nusoap.php');
 require_once('config.php');
 
+if (!defined('STDERR')) {
+   define('STDERR', fopen('php://stderr', 'w'));
+}
 
 function die_error ($msg, $exit = 2) {
 	if(is_array($msg)) {
 		$msg = print_r($msg,true);
 	}
-	echo ("ERROR:\n$msg\n");
+	fwrite (STDERR, "ERROR:\n$msg\n");
 	exit ($exit);
 }
 
