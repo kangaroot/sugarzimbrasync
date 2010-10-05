@@ -201,25 +201,29 @@ try {
   }
   fclose($fp);
 
-  if ($DEBUG === true) {
-  		echo("===== DEBUG MODE IS ON - not changing data, just printing out the commands =====\n");
-  		// clear out existing contacts
-  		echo('=> Clear Zimbra:    /opt/zimbra/bin/zmprov sm '.$zimbra_account.' emptyFolder \'/'.$zimbra_folder.'\''."\n");
-  		// add in the contacts harvested from sugar
-  		echo('=> Add Sugar Data:  /usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"'."\n");
-  } else {
-        echo("=> Clearing Zimbra Data\n");
-  		system('/opt/zimbra/bin/zmprov sm '.$zimbra_account.' emptyFolder \'/'.$zimbra_folder.'\'');
-        echo("=> Adding parsed data from SugarCRM into Zimbra\n");
+	$msg_clear = "Clear contacts  folder in Zimbra";
+	$msg_fill  = "Add Contacts to folder in Zimbra";
+	$cmd_clear = "/opt/zimbra/bin/zmprov sm $zimbra_account emptyFolder '/$zimbra_folder'";
+	$cmd_fill  = "/usr/bin/curl -k -u '$zimbra_username:$zimbra_password' -T /tmp/SugarCRMContacts.csv '$zimbra_url/zimbra/home/" . urlencode ("$zimbra_account") . '/' . urlencode("$zimbra_folder")."?fmt=csv'";
+	if ($DEBUG) {
+		echo("===== DEBUG MODE IS ON - not changing data, just printing out the commands =====\n");
+		echo("=> $msg_clear: $cmd_clear\n");
+		echo("=> $msg_fill: $cmd_fill\n");
+	} else {
+		echo("=> $msg_clear\n");
+		exec($cmd_clear, $output, $ret);
+		if ($ret) {
+			die_error ("Command failed: $cmd_clear\n" . print_r($output,true). "\nexitcode $ret");
+		}
+		echo("=> $msg_fill\n");
 		// curl is pretty lame. it might exit(0) even though the server gave http 400, luckily we can parse the output
-		exec  ('/usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T /tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"', $output);
+		exec  ($cmd_fill, $output);
 		$output = implode ($output,"\n");
 		if (stripos($output,'error') !== false) {
 			die_error($output);
 		}
-}
-echo("=> Done!\n");
-
+	}
+	echo("=> Done!\n");
 }
 catch (SoapFault $soapFault) {
   die_error("Second connection" . var_export ($soapFault, true));
