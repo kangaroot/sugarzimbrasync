@@ -196,7 +196,7 @@ try {
 	}
 	extract ($data);
     }
-    fwrite($fp, "\"$assistant_phone\",\"$birthdate\",\"\",\"\",\"$account_name\",\"$phone_work\",\"$description\",\"$department\",\"\",\"$email1\",\"$email2\",\"\",\"7\",\"$first_name\",\"$first_name $last_name\",\"\",\"\",\"\",\"$phone_home\",\"\",\"\",\"\",\"\",\"\",\"\",\"$title\",\"$last_name\",\"\",\"$phone_mobile\",\"$salutation\",\"\",\"\",\"$description\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"$primary_address_city\",\"$primary_address_country\",\"$phone_fax\",\"$phone_work\",\"$phone_other\",\"$primary_address_postalcode\",\"$primary_address_state\",\"$primary_address_street\",\"$sugarURL/index.php?action=DetailView&module=Contacts&record=$id\",\"\"");
+    fwrite($fp, utf8_encode("\"$assistant_phone\",\"$birthdate\",\"\",\"\",\"$account_name\",\"$phone_work\",\"$description\",\"$department\",\"\",\"$email1\",\"$email2\",\"\",\"7\",\"$first_name\",\"$first_name $last_name\",\"\",\"\",\"\",\"$phone_home\",\"\",\"\",\"\",\"\",\"\",\"\",\"$title\",\"$last_name\",\"\",\"$phone_mobile\",\"$salutation\",\"\",\"\",\"$description\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"$primary_address_city\",\"$primary_address_country\",\"$phone_fax\",\"$phone_work\",\"$phone_other\",\"$primary_address_postalcode\",\"$primary_address_state\",\"$primary_address_street\",\"$sugarURL/index.php?action=DetailView&module=Contacts&record=$id\",\"\""));
     fwrite($fp, "\n");
   }
   fclose($fp);
