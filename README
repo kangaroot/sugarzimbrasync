@@ -19,6 +19,14 @@ what it would do.
 [*] zmprov is part of zimbra, so you'll probably run this on the machine that runs zimbra.
     the sugar machine can be different, as long as you have access to it's soap interface.
 
+== Crontab ==
+
+Use a command like this for defining a crontab, then you only get emailed when an error occurred.
+Use whichever user you want, as long as he has permissions to run the required tools,
+and $PATH is set correctly so curl and zmprov can be found.
+
+su - zimbra -c sync-sugar-to-zimbra.php >/dev/null
+
 == known issues ==
 * Memory usage is not optimal as it is. (we use the huge dataset at once).
 Play with php's memory_limit setting, we need about 400MB for 500 contacts.
