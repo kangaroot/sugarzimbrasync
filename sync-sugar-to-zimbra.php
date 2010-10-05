@@ -208,8 +208,8 @@ try {
 
 	$msg_clear = "Clear contacts  folder in Zimbra";
 	$msg_fill  = "Add Contacts to folder in Zimbra";
-	$cmd_clear = "/opt/zimbra/bin/zmprov sm $zimbra_account emptyFolder '/$zimbra_folder'";
-	$cmd_fill  = "/usr/bin/curl -Ss -k -u '$zimbra_username:$zimbra_password' -T /tmp/SugarCRMContacts.csv '$zimbra_url/zimbra/home/" . urlencode ("$zimbra_account") . '/' . urlencode("$zimbra_folder")."?fmt=csv'";
+	$cmd_clear = "zmprov sm $zimbra_account emptyFolder '/$zimbra_folder'";
+	$cmd_fill  = "curl -Ss -k -u '$zimbra_username:$zimbra_password' -T /tmp/SugarCRMContacts.csv '$zimbra_url/zimbra/home/" . urlencode ("$zimbra_account") . '/' . urlencode("$zimbra_folder")."?fmt=csv'";
 	if ($DEBUG) {
 		echo("===== DEBUG MODE IS ON - not changing data, just printing out the commands =====\n");
 		echo("=> $msg_clear: $cmd_clear\n");
