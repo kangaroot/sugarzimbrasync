@@ -62,7 +62,9 @@ try {
 	}
   $contacts = $result[entry_list];
 
-  $fp = fopen( "/tmp/SugarCRMContacts.csv" , "w" );
+  if(!$fp = fopen( "/tmp/SugarCRMContacts.csv" , "w" )) {
+	  die_error ("Could not open /tmp/SugarCRMContacts.csv for writing");
+}
 
   echo("=> Parsing SugarCRM data into CSV for Zimbra\n");
 
