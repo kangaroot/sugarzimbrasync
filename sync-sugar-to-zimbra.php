@@ -207,7 +207,7 @@ try {
   		echo('=> Clear Zimbra:    /opt/zimbra/bin/zmprov sm '.$zimbra_account.' emptyFolder \'/'.$zimbra_folder.'\''."\n");
   		// add in the contacts harvested from sugar
   		echo('=> Add Sugar Data:  /usr/bin/curl -k -u '.$zimbra_username.':'.$zimbra_password.' -T @/tmp/SugarCRMContacts.csv "'.$zimbra_url.'/zimbra/home/'.$zimbra_account.'/'.urlencode($zimbra_folder).'?fmt=csv"'."\n");
-  } {
+  } else {
         echo("=> Clearing Zimbra Data\n");
   		system('/opt/zimbra/bin/zmprov sm '.$zimbra_account.' emptyFolder \'/'.$zimbra_folder.'\'');
         echo("=> Adding parsed data from SugarCRM into Zimbra\n");
